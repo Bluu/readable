@@ -5,50 +5,73 @@ import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 
 import { 
-    postsSortBy,
-    postsSortOrder,
+    postsSort,
 } from '../actions/posts';
 import Post from './post';
 import Categories from '../components/categories';
-// import Sort from '../components/sort';
+import Sort from '../components/sort';
 
 class PostList extends Component {
     constructor() {
-        super()
-        this.handleOnSortBy = this.handleOnSortBy.bind(this)
-        this.handleOnSortOrder = this.handleOnSortOrder.bind(this)
+        super();
+        this.handleOnPostsSort = this.handleOnPostsSort.bind(this);
     }
 
-    handleOnSortBy(sortBy) {
-        this.props.postsSortBy(sortBy)
-    }
+    handleOnPostsSort(sortOption) {
+        let sort;
 
-    handleOnSortOrder() {
-        this.props.postsSortOrder()
+        switch (sortOption) {
+            case '1':
+                sort = {
+                    by: 'voteScore',
+                    order: true,
+                };
+                break;
+            case '2':
+                sort = {
+                    by: 'voteScore',
+                    order: false,
+                };
+                break;
+            case '3':
+                sort = {
+                    by: 'timestamp',
+                    order: true,
+                };
+                break;
+            case '4':
+                sort = {
+                    by: 'timestamp',
+                    order: false,
+                };
+                break;
+        }
+
+        this.props.postsSort(sort);
     }
 
     render() {
         const {
             match: { params: { category } },
             categories,
-            posts: { posts, sortBy, sortOrder },
+            posts: { posts, sort },
         } = this.props
         
         const filteredPosts = category ? posts.filter((post) => post.category === category) : posts
 
         filteredPosts.sort((a, b) => {
-            if (sortOrder) {
-                if (a[sortBy] < b[sortBy]) {
+            if (sort.order) {
+                if (a[sort.by] > b[sort.by]) {
                     return -1;
                 }
-                if (a[sortBy] > b[sortBy]) {
+                if (a[sort.by] < b[sort.by]) {
                     return 1;
                 }
             } else {
-                if (a[sortBy] > b[sortBy]) {
+                if (a[sort.by] < b[sort.by]) {
                     return -1;
                 }
-                if (a[sortBy] < b[sortBy]) {
+                if (a[sort.by] > b[sort.by]) {
                     return 1;
                 }
             }
@@ -61,6 +84,9 @@ class PostList extends Component {
                 <Link to="/new">Add new post</Link>
                 <div>
                     <Categories categories={categories} currentCategory={category}/>
+                </div>
+                <div>
+                    <Sort onSort={this.handleOnPostsSort}/>
                 </div>
                 <div>
                     { filteredPosts.map(post => <Post key={post.id} post={post} showDetailsOpt={true} />) } 
@@ -80,7 +106,6 @@ export default connect(
     }),
     // map dispatch to props
     (dispatch) => bindActionCreators({
-        postsSortBy,
-        postsSortOrder,
+        postsSort,
     }, dispatch)
 )(PostList)

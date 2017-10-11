@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom'
 
-import { startVotePost } from '../actions/posts'
+import { startVotePost, startDeletePost} from '../actions/posts'
 import PostActions from '../components/post-actions'
 import Vote from '../components/vote';
 import PostData from '../components/post-data';
@@ -19,15 +19,33 @@ class Post extends Component {
     }
 
     handleOnPostDetail() {
+        const {
+            history,
+            post,
+        } = this.props;
 
+        history.push(`/${post.category}/${post.id}`);
     }
 
     handleOnPostEdit() {
+        const {
+            history,
+            post
+        } = this.props;
 
+        history.push(`/edit/${post.id}`);
     }
 
     handleOnPostDelete() {
+        const {
+            match: { params: { post_id } },
+            history,
+            startDeletePost,
+            post,
+        } = this.props;
 
+        startDeletePost(post.id)
+        history.replace('/');
     }
 
     handleOnPostVote(voteType) {
@@ -56,6 +74,7 @@ class Post extends Component {
                     onPostEdit={this.handleOnPostEdit}
                     onPostDelete={this.handleOnPostDelete}
                 />
+                <Vote voteScore={post.voteScore} onVote={this.handleOnPostVote}/>
                 <PostActions 
                     onDisplayDetails={ showDetailsOpt ? this.handleOnPostDetail : null }
                     onDeletePost={ showDeleteOpt ? this.handleOnPostDelete : null }
@@ -73,5 +92,6 @@ export default withRouter(connect(
     null,
     dispatch => bindActionCreators({
         startVotePost,
+        startDeletePost,
     }, dispatch)
 )(Post))

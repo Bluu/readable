@@ -1,26 +1,22 @@
 import {
-    POSTS_SORT_BY,
-    POSTS_SORT_ORDER,
+    POSTS_SORT,
     FETCH_POSTS,
 } from '../actions/posts'
 
 const initialState = {
     posts: [],
-    sortBy: 'voteScore',
-    sortOrder: false,
+    sort: {
+        by: 'voteScore',
+        order: true,
+    }
 }
 
 export default (state = initialState, action) => {
     switch (action.type) {
-        case POSTS_SORT_BY:
+        case POSTS_SORT:
             return {
                 ...state,
-                sortBy: action.sortBy,
-            }
-        case POSTS_SORT_ORDER:
-            return {
-                ...state,
-                sortOrder: !state.sortOrder,
+                sort: action.sort,
             }
         case FETCH_POSTS:
             return {

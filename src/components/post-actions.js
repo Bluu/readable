@@ -16,7 +16,7 @@ const PostActions = ({
 PostActions.propTypes = {
     onDisplayDetails: PropTypes.func,
     onDeletePost: PropTypes.func,
-    onEditPost: PropTypes.array,
+    onEditPost: PropTypes.func,
 }
 
 export default PostActions

@@ -6,23 +6,16 @@ import {
     votePost,
 } from '../api'
 
-export const POSTS_SORT_BY = 'POSTS_SORT_BY'
-export const POSTS_SORT_ORDER = 'POSTS_SORT_ORDER'
+export const POSTS_SORT = 'POSTS_SORT'
 export const FETCH_POSTS = 'FETCH_POSTS'
 export const ADD_POST = 'ADD_POST'
 export const EDIT_POST = 'EDIT_POST'
 export const DELETE_POST = 'DELETE_POST'
 
-export const postsSortBy = (sortBy) => (
+export const postsSort = (sort) => (
     {
-        type: POSTS_SORT_BY,
-        sortBy
-    }
-)
-
-export const postsSortOrder = () => (
-    {
-        type: POSTS_SORT_ORDER,
+        type: POSTS_SORT,
+        sort
     }
 )
 

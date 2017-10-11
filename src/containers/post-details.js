@@ -2,8 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
-import PostDetail from '../components/post-detail'
-import PostActions from '../components/post-actions'
+import Post from './post'
 
 import {
     startDeletePost
@@ -42,7 +41,7 @@ class PostDetails extends Component {
     render() {
         const {
             match: { params: { post_id } },
-            posts,
+            posts: { posts },
         } = this.props
         
         const post = posts.find(({id}) => id === post_id)
@@ -53,8 +52,7 @@ class PostDetails extends Component {
 
         return (
             <div>
-                <PostDetail post={post} />
-                <PostActions onDeletePost={this.handleOnDeletePost} onEditPost={this.handleOnEditPost}/>
+                <Post post={post} showDeleteOpt={true} showEditOpt={true} />
             </div>
         )
     }
