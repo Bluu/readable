@@ -36,7 +36,7 @@ export const startAddPost = (post) => {
     return (dispatch, getState) => (
         savePost(post)
         .then(post => {
-            const posts = [ ...getState().posts, post ]
+            const posts = [ ...getState().posts.posts, post ];
             dispatch(fetchPosts(posts))
         })
     )

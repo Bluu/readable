@@ -18,11 +18,23 @@ class PostAlter extends Component {
     }
 
     handleNewPost(post) {
-        this.props.startAddPost(post)
+        const {
+            history,
+            startAddPost,
+        } = this.props;
+
+        startAddPost(post);
+        history.replace('/');
     }
 
     handleEditPost(post) {
-        this.props.startUpdatePost(post.id, post.title, post.body)
+        const {
+            history,
+            startUpdatePost,
+        } = this.props;
+
+        startUpdatePost(post.id, post.title, post.body);
+        history.replace('/');
     }
 
     render() {

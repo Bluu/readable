@@ -107,6 +107,10 @@ export const deletePost = (postID) => (
 // `GET /posts/:id/comments`  
 // **USAGE:**  
 //   Get all the comments for a single post  
+export const getComments = (postID) => (
+    fetch(`${API_URL}/posts/${postID}/comments`, REQUEST_INIT)
+    .then(res => res.json())
+)
 
 // `POST /comments`  
 // **USAGE:**  
@@ -126,6 +130,12 @@ export const deletePost = (postID) => (
 // `POST /comments/:id`  
 // **USAGE:**  
 //   Used for voting on a comment.  
+export const voteComment = (commentID, option) => (
+    fetch(`${API_URL}/comments/${commentID}`, REQUEST_INIT_CREATOR('POST', {
+        option
+    }))
+    .then(res => res.json())
+)
 
 // `PUT /comments/:id`  
 // **USAGE:**  
