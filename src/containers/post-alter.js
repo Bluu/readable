@@ -1,76 +1,76 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import PropTypes from 'prop-types'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { withRouter } from 'react-router-dom';
 
 import {
     startAddPost,
     startUpdatePost,
-} from '../actions/posts'
-import PostForm from '../components/post-form'
+    togglePostDialog,
+} from '../actions/posts';
+import PostForm from '../components/post-form';
 
 class PostAlter extends Component {
     constructor() {
         super()
 
-        this.handleNewPost = this.handleNewPost.bind(this)
-        this.handleEditPost = this.handleEditPost.bind(this)
+        this.handleNewPost = this.handleNewPost.bind(this);
+        this.handleEditPost = this.handleEditPost.bind(this);
+        this.handleOnDialogClose = this.handleOnDialogClose.bind(this);
     }
 
     handleNewPost(post) {
         const {
-            history,
             startAddPost,
+            togglePostDialog,
         } = this.props;
 
         startAddPost(post);
-        history.replace('/');
+        togglePostDialog();
     }
 
     handleEditPost(post) {
         const {
-            history,
             startUpdatePost,
+            togglePostDialog,
         } = this.props;
 
         startUpdatePost(post.id, post.title, post.body);
-        history.replace('/');
+        togglePostDialog();
+    }
+
+    handleOnDialogClose() {
+        this.props.togglePostDialog();
     }
 
     render() {
         const { 
             categories,
-            posts,
-            match: { path, params: { post_id }}
+            dialog,
         } = this.props
-
-        const post = posts.find(post => post.id === post_id)
-
-        if (path === '/edit/:post_id' && posts.length === 0) {
-            return <span>Loading</span>;
-        } else if (path === '/edit/:post_id' && posts.length > 0 && !post) {
-            return <span>Post not found</span>;
-        }
 
         return (
             <PostForm 
-                onFormSubmit={post ? this.handleEditPost : this.handleNewPost} 
+                visible={dialog.visible}
+                onClose={this.handleOnDialogClose}
+                onFormSubmit={dialog.selectedPost.id ? this.handleEditPost : this.handleNewPost} 
                 categories={categories} 
-                post={post ? post : {}} 
+                post={dialog.selectedPost} 
             />
         )
     }
 }
 
-export default connect (
+export default withRouter(connect (
     // map state to props
-    ({ categories, posts: {posts}  }) => ({
+    ({ categories, posts: { dialog } }) => ({
         categories,
-        posts,
+        dialog,
     }), 
     // map dispatch to props
     dispatch => bindActionCreators({
         startAddPost,
         startUpdatePost,
+        togglePostDialog,
     }, dispatch) 
-)(PostAlter)
+)(PostAlter))

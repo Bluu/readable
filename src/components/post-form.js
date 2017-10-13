@@ -1,7 +1,10 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Button, DialogContainer, TextField, SelectField } from 'react-md';
 
 const PostForm = ({
+    visible,
+    onClose,
     onFormSubmit,
     categories,
     post: {
@@ -13,75 +16,103 @@ const PostForm = ({
     }
 }) => {
     let titleInput,
-        bodyInput,
         authorInput,
-        categoryInput;
+        categoryInput,
+        bodyInput;
 
     const formSubmit = () => {
+        const title = titleInput.getField().value;
+        const author = authorInput.getField().value;
+        const category = categoryInput.value;
+        const body = bodyInput.getField().value;
+
+        if (!title) {
+            return titleInput.focus();
+        }
+
+        if (!author) {
+            return authorInput.focus();
+        }
+
+        if (!category) {
+            return;
+        }
+
+        if (!body) {
+            return bodyInput.focus();
+        }
+
         const post = {
             id: id || Math.random().toString(),
-            title: titleInput.value,
-            body: bodyInput.value,
-            author: authorInput.value,
-            category: categoryInput.value,
+            title,
+            body,
+            author,
+            category,
             timestamp: Date.now(),
         };
 
         onFormSubmit(post);
     }
 
+    const actions = [
+        <Button flat secondary onClick={onClose}>Cancel</Button>,
+        <Button flat primary onClick={formSubmit}>Save</Button>,
+    ];
+
     return (
-        <form onSubmit={
-            (e) => {
-                e.preventDefault()
-                formSubmit()
-            }
-        }>
-            <div>
-                <span>Title:</span>
-                <input 
-                    id="title" 
-                    type="text" 
-                    ref={(input) => titleInput = input} 
-                    defaultValue={title}
-                />
-            </div>
-            <div>
-                <span>Description:</span>
-                <textarea 
-                    id="body" 
-                    ref={(input) => bodyInput = input}
-                    defaultValue={body}
-                />
-            </div>
-            <div>
-                <span>Author:</span>
-                <input 
-                    id="author" 
-                    type="text" 
-                    ref={(input) => authorInput = input}
-                    defaultValue={author}
-                />
-            </div>
-            <div>
-                <span>Category:</span>
-                <select 
-                    id="category" 
-                    ref={(input) => categoryInput = input}
-                    defaultValue={category}
-                >
-                    { categories.map(({name}) => <option key={name} value={name}>{name}</option>) }
-                </select>
-            </div>
-            
-            <button type="submit">{`${id ? 'Edit' : 'Save'} post`}</button>
-        </form>
+        <DialogContainer
+            id="save-post-dialog"
+            visible={visible}
+            onHide={onClose}
+            actions={actions}
+            title={`${id ? 'Edit' : 'New'} Post`}
+        >
+            <TextField
+                id="title-field"
+                label="Title"
+                placeholder="Post title"
+                defaultValue={title}
+                required
+                ref={(input) => titleInput = input} 
+            />
+            <TextField
+                id="author-field"
+                label="Author"
+                placeholder="Post author"
+                defaultValue={author}
+                required
+                ref={(input) => authorInput = input} 
+            />
+            <SelectField
+                id="category-field"
+                label="Category"
+                placeholder="Select a category"
+                fullWidth
+                menuItems={categories.map(category=> ({ label: category.name ,value: category.path}))}
+                defaultValue={category}
+                required
+                ref={(input) => categoryInput = input}
+            />
+            <TextField
+                id="description-field"
+                label="Description"
+                placeholder="Post description"
+                defaultValue={title}
+                required
+                resize={{ min: 200, max: 300 }}
+                rows={2}
+                fullWidth
+                ref={(input) => bodyInput = input} 
+            />
+        </DialogContainer>
     )
 }
 
 PostForm.propTypes = {
-    onFormSubmit: PropTypes.func,
-    categories: PropTypes.array,
+    visible: PropTypes.bool.isRequired,
+    onClose: PropTypes.func.isRequired,
+    onFormSubmit: PropTypes.func.isRequired,
+    categories: PropTypes.array.isRequired,
     post: PropTypes.shape({
         id: PropTypes.string,
         title: PropTypes.string,

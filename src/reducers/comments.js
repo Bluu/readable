@@ -1,15 +1,20 @@
 import {
     SORT_COMMENTS,
     FETCH_COMMENTS,
-} from '../actions/comments'
+    TOGGLE_COMMENT_DIALOG,
+} from '../actions/comments';
 
 const initialState = {
     comments: [],
     sort: {
         by: 'voteScore',
         order: true,
-    }
-}
+    },
+    dialog: {
+        visible: false,
+        selectedComment: {},
+    },
+};
 
 export default (state = initialState, action) => {
     switch (action.type) {
@@ -23,7 +28,15 @@ export default (state = initialState, action) => {
                 ...state,
                 comments: action.comments,
             }
+        case TOGGLE_COMMENT_DIALOG:
+            return {
+                ...state,
+                dialog: {
+                    visible: !state.dialog.visible,
+                    selectedComment: action.selectedComment,
+                },
+            }
         default:
-            return state
+            return state;
     }
 }

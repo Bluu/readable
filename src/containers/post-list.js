@@ -1,11 +1,10 @@
-import React, { Component, } from 'react'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import PropTypes from 'prop-types'
-import { Link } from 'react-router-dom'
+import React, { Component, } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 import { 
     postsSort,
+    togglePostDialog,
 } from '../actions/posts';
 import Post from './post';
 import Categories from '../components/categories';
@@ -15,12 +14,14 @@ class PostList extends Component {
     constructor() {
         super();
         this.handleOnPostsSort = this.handleOnPostsSort.bind(this);
+        this.handleNewPost = this.handleNewPost.bind(this);
     }
 
     handleOnPostsSort(sortOption) {
         let sort;
 
         switch (sortOption) {
+            default:
             case '1':
                 sort = {
                     by: 'voteScore',
@@ -50,14 +51,18 @@ class PostList extends Component {
         this.props.postsSort(sort);
     }
 
+    handleNewPost () {
+        this.props.togglePostDialog();
+    }
+
     render() {
         const {
             match: { params: { category } },
             categories,
             posts: { posts, sort },
-        } = this.props
+        } = this.props;
         
-        const filteredPosts = category ? posts.filter((post) => post.category === category) : posts
+        const filteredPosts = category ? posts.filter((post) => post.category === category) : posts;
 
         filteredPosts.sort((a, b) => {
             if (sort.order) {
@@ -81,7 +86,7 @@ class PostList extends Component {
 
         return (
             <div>
-                <Link to="/new">Add new post</Link>
+                <button onClick={this.handleNewPost}>Add new post</button>
                 <div>
                     <Categories categories={categories} currentCategory={category}/>
                 </div>
@@ -107,5 +112,6 @@ export default connect(
     // map dispatch to props
     (dispatch) => bindActionCreators({
         postsSort,
+        togglePostDialog,
     }, dispatch)
 )(PostList)

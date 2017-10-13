@@ -1,7 +1,5 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-
-// import Vote from './vote';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 const PostData = (
     { 

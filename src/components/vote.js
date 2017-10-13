@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const Vote = ({ voteScore, onVote }) => (
     <div style={{ textAlign: 'center' }}>
@@ -13,5 +14,10 @@ const Vote = ({ voteScore, onVote }) => (
         </div>
     </div>
 )
+
+Vote.propTypes = {
+    voteScore: PropTypes.number.isRequired,
+    onVote: PropTypes.func.isRequired,
+}
 
 export default Vote;

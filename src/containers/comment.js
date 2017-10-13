@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-// import { withRouter } from 'react-router-dom'
 
 import { 
     startVoteComment, 
-    // startDeletePost,
-} from '../actions/comments'
-// import PostActions from '../components/post-actions'
+    startDeleteComment,
+    toggleCommentDialog,
+} from '../actions/comments';
+import Actions from '../components/actions';
 import Vote from '../components/vote';
 import CommentData from '../components/comment-data';
 
@@ -15,41 +15,28 @@ class Comment extends Component {
     constructor() {
         super()
 
-        // this.handleOnPostDetail = this.handleOnPostDetail.bind(this)
-        // this.handleOnPostEdit = this.handleOnPostEdit.bind(this)
-        // this.handleOnPostDelete = this.handleOnPostDelete.bind(this)
-        this.handleOnCommentVote = this.handleOnCommentVote.bind(this)
+        this.handleOnCommentEdit = this.handleOnCommentEdit.bind(this);
+        this.handleOnCommentDelete = this.handleOnCommentDelete.bind(this);
+        this.handleOnCommentVote = this.handleOnCommentVote.bind(this);
     }
 
-    // handleOnPostDetail() {
-    //     const {
-    //         history,
-    //         post,
-    //     } = this.props;
+    handleOnCommentEdit() {
+        const {
+            comment,
+            toggleCommentDialog,
+        } = this.props;
 
-    //     history.push(`/${post.category}/${post.id}`);
-    // }
+        toggleCommentDialog(comment);
+    }
 
-    // handleOnPostEdit() {
-    //     const {
-    //         history,
-    //         post
-    //     } = this.props;
+    handleOnCommentDelete() {
+        const {
+            comment,
+            startDeleteComment,
+        } = this.props;
 
-    //     history.push(`/edit/${post.id}`);
-    // }
-
-    // handleOnPostDelete() {
-    //     const {
-    //         match: { params: { post_id } },
-    //         history,
-    //         startDeletePost,
-    //         post,
-    //     } = this.props;
-
-    //     startDeletePost(post.id)
-    //     history.replace('/');
-    // }
+        startDeleteComment(comment.id);
+    }
 
     handleOnCommentVote(voteType) {
         const { 
@@ -63,35 +50,25 @@ class Comment extends Component {
     render() {
         const { 
             comment,
-            // showDetailsOpt,
-            // showDeleteOpt,
-            // showEditOpt,
         } = this.props;
-        // console.log('comment', comment)
+
         return (
             <div>
                 <CommentData 
                     comment={comment}
                 />
                 <Vote voteScore={comment.voteScore} onVote={this.handleOnCommentVote}/>
-                {/* 
-                <PostActions 
-                    onDisplayDetails={ showDetailsOpt ? this.handleOnPostDetail : null }
-                    onDeletePost={ showDeleteOpt ? this.handleOnPostDelete : null }
-                    onEditPost={ showEditOpt ? this.handleOnPostEdit : null }
-                /> */}
+                <Actions onDelete={this.handleOnCommentDelete} onEdit={this.handleOnCommentEdit}/>
             </div>
         )
     }
 }
 
 export default connect(
-    // ({ posts }) => ({
-    //     posts
-    // }),
     null,
     dispatch => bindActionCreators({
         startVoteComment,
-        // startDeletePost,
+        startDeleteComment,
+        toggleCommentDialog,
     }, dispatch)
 )(Comment)

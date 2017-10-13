@@ -1,26 +1,17 @@
-// export const API_URL = 'http://localhost:5001'
-
-// export const AUTHORIZATION_HEADER = {
-//     Authorization: 'I<3U-XOXOXO'
-// }
-
-// export const HEADERS = {
-//     Authorization: 'I<3U-XOXOXO'
-// }
-const API_URL = 'http://localhost:5001'
-const AUTHORIZATION = 'L12213-I<3U-XOXOXO'
+const API_URL = 'http://localhost:5001';
+const AUTHORIZATION = 'L12213-I<3U-XOXOXO';
 
 const REQUEST_INIT = {
     headers: {
         Authorization: AUTHORIZATION
-    }
-}
+    },
+};
 
 const REQUEST_INIT_CREATOR = (method, body={}) => ({
     method,
     headers: {
         ...REQUEST_INIT.headers,
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
     },
     body: JSON.stringify(body),
 })
@@ -100,8 +91,8 @@ export const updatePost = (postID, title, body) => (
 //   Sets the deleted flag for a post to 'true'.   
 //   Sets the parentDeleted flag for all child comments to 'true'.  
 export const deletePost = (postID) => (
-    fetch(`${API_URL}/posts/${postID}`, REQUEST_INIT_CREATOR('PUT'))
-    .then(res => res.json())
+    fetch(`${API_URL}/posts/${postID}`, REQUEST_INIT_CREATOR('DELETE'))
+    // .then(res => res.json())
 )
 
 // `GET /posts/:id/comments`  
@@ -121,7 +112,11 @@ export const getComments = (postID) => (
 //   timestamp: timestamp. Get this however you want.  
 //   body: String  
 //   owner: String  
-//   parentId: Should match a post id in the database.  
+//   parentId: Should match a post id in the database. 
+export const saveComment = (comment) => (
+    fetch(`${API_URL}/comments`, REQUEST_INIT_CREATOR('POST', comment))
+    .then(res => res.json())
+) 
 
 // `GET /comments/:id`  
 // **USAGE:**  
@@ -144,7 +139,18 @@ export const voteComment = (commentID, option) => (
 // **PARAMS:**  
 //   timestamp: timestamp. Get this however you want.  
 //   body: String  
+export const updateComment = (commentID, timestamp, body) => (
+    fetch(`${API_URL}/comments/${commentID}`, REQUEST_INIT_CREATOR('PUT', {
+        timestamp,
+        body,
+    }))
+    .then(res => res.json())
+)
 
 // `DELETE /comments/:id`  
 // **USAGE:**  
 //   Sets a comment's deleted flag to 'true'  
+export const deleteComment = (commentID) => (
+    fetch(`${API_URL}/comments/${commentID}`, REQUEST_INIT_CREATOR('DELETE'))
+    .then(res => res.json())
+)

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const Sort = ({ onSort }) => (
     <select onChange={e => onSort(e.target.value)}>
@@ -8,5 +9,9 @@ const Sort = ({ onSort }) => (
         <option value="4">Time - Oldest first</option>
     </select>
 )
+
+Sort.propTypes = {
+    onSort: PropTypes.func.isRequired,
+}
 
 export default Sort

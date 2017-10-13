@@ -1,15 +1,20 @@
 import {
     POSTS_SORT,
     FETCH_POSTS,
-} from '../actions/posts'
+    TOGGLE_POST_DIALOG,
+} from '../actions/posts';
 
 const initialState = {
     posts: [],
     sort: {
         by: 'voteScore',
         order: true,
-    }
-}
+    },
+    dialog: {
+        visible: false,
+        selectedPost: {},
+    },
+};
 
 export default (state = initialState, action) => {
     switch (action.type) {
@@ -23,7 +28,15 @@ export default (state = initialState, action) => {
                 ...state,
                 posts: action.posts,
             }
+        case TOGGLE_POST_DIALOG:
+            return {
+                ...state,
+                dialog: {
+                    visible: !state.dialog.visible,
+                    selectedPost: action.selectedPost,
+                },
+            }
         default:
-            return state
+            return state;
     }
 }

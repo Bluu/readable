@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 const Categories = ({categories, currentCategory}) => (
     <ul>
@@ -17,5 +18,10 @@ const Categories = ({categories, currentCategory}) => (
         }
     </ul>
 )
+
+Categories.propTypes = {
+    categories: PropTypes.array.isRequired,
+    currentCategory: PropTypes.string,
+}
 
 export default Categories;

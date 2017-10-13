@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom'
 
-import { startVotePost, startDeletePost} from '../actions/posts'
-import PostActions from '../components/post-actions'
+import { startVotePost, startDeletePost, togglePostDialog } from '../actions/posts';
+import Actions from '../components/actions';
 import Vote from '../components/vote';
 import PostData from '../components/post-data';
 
@@ -12,10 +12,10 @@ class Post extends Component {
     constructor() {
         super()
 
-        this.handleOnPostDetail = this.handleOnPostDetail.bind(this)
-        this.handleOnPostEdit = this.handleOnPostEdit.bind(this)
-        this.handleOnPostDelete = this.handleOnPostDelete.bind(this)
-        this.handleOnPostVote = this.handleOnPostVote.bind(this)
+        this.handleOnPostDetail = this.handleOnPostDetail.bind(this);
+        this.handleOnPostEdit = this.handleOnPostEdit.bind(this);
+        this.handleOnPostDelete = this.handleOnPostDelete.bind(this);
+        this.handleOnPostVote = this.handleOnPostVote.bind(this);
     }
 
     handleOnPostDetail() {
@@ -29,22 +29,21 @@ class Post extends Component {
 
     handleOnPostEdit() {
         const {
-            history,
-            post
+            post,
+            togglePostDialog,
         } = this.props;
 
-        history.push(`/edit/${post.id}`);
+        togglePostDialog(post);
     }
 
     handleOnPostDelete() {
         const {
-            match: { params: { post_id } },
             history,
             startDeletePost,
             post,
         } = this.props;
 
-        startDeletePost(post.id)
+        startDeletePost(post.id);
         history.replace('/');
     }
 
@@ -75,10 +74,10 @@ class Post extends Component {
                     onPostDelete={this.handleOnPostDelete}
                 />
                 <Vote voteScore={post.voteScore} onVote={this.handleOnPostVote}/>
-                <PostActions 
+                <Actions 
                     onDisplayDetails={ showDetailsOpt ? this.handleOnPostDetail : null }
-                    onDeletePost={ showDeleteOpt ? this.handleOnPostDelete : null }
-                    onEditPost={ showEditOpt ? this.handleOnPostEdit : null }
+                    onDelete={ showDeleteOpt ? this.handleOnPostDelete : null }
+                    onEdit={ showEditOpt ? this.handleOnPostEdit : null }
                 />
             </div>
         )
@@ -86,12 +85,10 @@ class Post extends Component {
 }
 
 export default withRouter(connect(
-    // ({ posts }) => ({
-    //     posts
-    // }),
     null,
     dispatch => bindActionCreators({
         startVotePost,
         startDeletePost,
+        togglePostDialog,
     }, dispatch)
 )(Post))
