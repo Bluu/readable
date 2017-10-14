@@ -1,16 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Button } from 'react-md';
 
 const Vote = ({ voteScore, onVote }) => (
     <div style={{ textAlign: 'center' }}>
         <div>
-            <button onClick={() => onVote('upVote')}>vote up</button>
+            <Button icon primary swapTheming onClick={() => onVote('upVote')}>keyboard_arrow_up</Button>
         </div>
         <div>
-            { voteScore }
+            <span className="md-display-1">{ voteScore }</span>
         </div>
         <div>
-            <button onClick={() => onVote('downVote')}>vote down</button>
+            <Button icon secondary swapTheming onClick={() => onVote('downVote')}>keyboard_arrow_down</Button>
         </div>
     </div>
 )

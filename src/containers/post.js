@@ -1,7 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom';
+import { 
+    Button, 
+    Grid, 
+    Cell,
+    Card,
+} from 'react-md';
 
 import { startVotePost, startDeletePost, togglePostDialog } from '../actions/posts';
 import Actions from '../components/actions';
@@ -65,20 +71,29 @@ class Post extends Component {
         } = this.props;
         
         return (
-            <div>
-                <PostData 
-                    post={post} 
-                    onPostVote={this.handleOnPostVote} 
-                    onPostDetail={this.handleOnPostDetail} 
-                    onPostEdit={this.handleOnPostEdit}
-                    onPostDelete={this.handleOnPostDelete}
-                />
-                <Vote voteScore={post.voteScore} onVote={this.handleOnPostVote}/>
-                <Actions 
-                    onDisplayDetails={ showDetailsOpt ? this.handleOnPostDetail : null }
-                    onDelete={ showDeleteOpt ? this.handleOnPostDelete : null }
-                    onEdit={ showEditOpt ? this.handleOnPostEdit : null }
-                />
+            <div style={{ marginBottom: 20}}>
+            <Grid noSpacing >
+                <Cell size={10}>
+                    <Card className="md-block-centered">
+                        <PostData 
+                            post={post} 
+                            onPostVote={this.handleOnPostVote} 
+                            onPostDetail={this.handleOnPostDetail} 
+                            onPostEdit={this.handleOnPostEdit}
+                            onPostDelete={this.handleOnPostDelete}
+                        />
+                        
+                        <Actions 
+                            onDisplayDetails={ showDetailsOpt ? this.handleOnPostDetail : null }
+                            onDelete={ showDeleteOpt ? this.handleOnPostDelete : null }
+                            onEdit={ showEditOpt ? this.handleOnPostEdit : null }
+                        />
+                    </Card>
+                </Cell>
+                <Cell size={2}>
+                    <Vote voteScore={post.voteScore} onVote={this.handleOnPostVote}/>
+                </Cell>
+            </Grid>
             </div>
         )
     }

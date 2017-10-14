@@ -1,5 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { 
+    Card, 
+    CardTitle, 
+    CardText, 
+    Slider 
+} from 'react-md';
 
 const PostData = (
     { 
@@ -17,16 +23,16 @@ const PostData = (
             title,
             voteScore,
         },
+        commentsCount,
 }) => {
     const postDate = new Date(timestamp).toLocaleString()
     
     return (
         <div>
-            <div>{title}</div>
-            <div>{author}</div>
-            <div>{postDate}</div>
-            <div>{body}</div>
-            <hr/>
+            <CardTitle title={title} subtitle={`by ${author} | ${postDate} ${!commentsCount ? '' : '| ' + commentsCount}`}/>
+            <CardText>
+                <p>{body}</p>
+            </CardText>
         </div>
     )
 }
@@ -43,7 +49,8 @@ PostData.propTypes = {
         timestamp: PropTypes.timestamp,
         title: PropTypes.string,
         voteScore: PropTypes.number,
-    }).isRequired
+    }).isRequired,
+    commentsCount: PropTypes.number,
 }
 
 export default PostData

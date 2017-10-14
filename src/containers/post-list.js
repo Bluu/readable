@@ -16,6 +16,7 @@ class PostList extends Component {
         super();
         this.handleOnPostsSort = this.handleOnPostsSort.bind(this);
         this.handleNewPost = this.handleNewPost.bind(this);
+        this.handleCategorySelect = this.handleCategorySelect.bind(this);
     }
 
     handleOnPostsSort(sortOption) {
@@ -56,6 +57,10 @@ class PostList extends Component {
         this.props.togglePostDialog();
     }
 
+    handleCategorySelect (path) {
+        this.props.history.push(path);
+    }
+
     render() {
         const {
             match: { params: { category } },
@@ -93,21 +98,20 @@ class PostList extends Component {
                 </Grid>
                 <Grid>
                     <Cell size={4} className="md-text-center">
-                        <Categories categories={categories} currentCategory={category}/>
+                        <span className="md-title">Categories</span>
                     </Cell>
                     <Cell size={8}>
-                    
+                        <span className="md-title">Sort</span><Sort onSort={this.handleOnPostsSort}/>
                     </Cell>
                 </Grid>
-                <div>
-                    <Categories categories={categories} currentCategory={category}/>
-                </div>
-                <div>
-                    <Sort onSort={this.handleOnPostsSort}/>
-                </div>
-                <div>
-                    { filteredPosts.map(post => <Post key={post.id} post={post} showDetailsOpt={true} />) } 
-                </div>
+                <Grid>
+                    <Cell size={4} className="md-text-center">
+                        <Categories categories={categories} currentCategory={category} onCategorySelect={this.handleCategorySelect}/>
+                    </Cell>
+                    <Cell size={8}>
+                        { filteredPosts.map(post => <Post key={post.id} post={post} showDetailsOpt={true} />) } 
+                    </Cell>
+                </Grid>
             </div>
         )
     }

@@ -1,16 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { CardActions, Button } from 'react-md';
 
 const Actions = ({
     onDisplayDetails,
     onDelete,
     onEdit,
 }) => (
-    <div>
-        { !onDisplayDetails ? null : <button onClick={onDisplayDetails}>Display more information</button> }
-        { !onDelete ? null : <button onClick={onDelete}>DELETE</button> }
-        { !onEdit ? null : <button onClick={onEdit}>EDIT</button> }
-    </div>
+    <CardActions>
+        { !onDisplayDetails ? null : <Button raised primary onClick={onDisplayDetails}>Display more information</Button> }
+        { !onDelete ? null : <Button flat secondary onClick={onDelete}>DELETE</Button> }
+        { !onEdit ? null : <Button flat primary onClick={onEdit}>EDIT</Button> }
+    </CardActions>
 )
 
 Actions.propTypes = {
