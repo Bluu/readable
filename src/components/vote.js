@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Button } from 'react-md';
 
 const Vote = ({ voteScore, onVote }) => (
-    <div style={{ textAlign: 'center' }}>
+    <div className="center-vertical">
         <div>
             <Button icon primary swapTheming onClick={() => onVote('upVote')}>keyboard_arrow_up</Button>
         </div>

@@ -98,10 +98,10 @@ class PostList extends Component {
                 </Grid>
                 <Grid>
                     <Cell size={4} className="md-text-center">
-                        <span className="md-title">Categories</span>
+                        <span className="md-title center-vertical">Categories</span>
                     </Cell>
                     <Cell size={8}>
-                        <span className="md-title">Sort</span><Sort onSort={this.handleOnPostsSort}/>
+                        <Sort onSort={this.handleOnPostsSort} type="posts"/>
                     </Cell>
                 </Grid>
                 <Grid>

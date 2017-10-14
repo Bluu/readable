@@ -99,8 +99,7 @@ class CommentList extends Component {
                     <Button floating primary onClick={this.handleNewComment}>add</Button>
                 </Grid>
                 <Grid>
-                    <span className="md-subheading-2">Sort Comments&nbsp;</span>
-                    <Sort onSort={this.handleOnCommentSort}/>
+                    <Sort onSort={this.handleOnCommentSort} type="comments"/>
                 </Grid>
                 <div>
                     {
