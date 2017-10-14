@@ -1,5 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { 
+    CardTitle, 
+    CardText, 
+} from 'react-md';
 
 const CommentData = (
     { 
@@ -13,9 +17,10 @@ const CommentData = (
     
     return (
         <div>
-            <div>{author}</div>
-            <div>{commentDate}</div>
-            <div>{body}</div>
+            <CardTitle title={author} subtitle={commentDate}/>
+            <CardText>
+                <p>{body}</p>
+            </CardText>
         </div>
     )
 }

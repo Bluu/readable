@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { Grid, Cell } from 'react-md';
 
 import Post from './post';
 import CommentList from './comment-list';
@@ -29,8 +30,19 @@ class PostDetails extends Component {
 
         return (
             <div>
-                <Post post={post} showDeleteOpt={true} showEditOpt={true} />
-                <CommentList postID={post.id}/>
+                <Grid>
+                    <span className="md-display-2">Post Details</span>
+                </Grid>
+                <Grid>
+                    <Cell size={8} offset={2}>
+                        <Post post={post} showDeleteOpt={true} showEditOpt={true} />
+                    </Cell>
+                </Grid>
+                <Grid>
+                    <Cell size={8} offset={2}>
+                        <CommentList postID={post.id}/>
+                    </Cell>
+                </Grid>
             </div>
         )
     }

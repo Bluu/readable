@@ -97,7 +97,7 @@ const PostForm = ({
                 id="description-field"
                 label="Description"
                 placeholder="Post description"
-                defaultValue={title}
+                defaultValue={body}
                 required
                 resize={{ min: 200, max: 300 }}
                 rows={2}

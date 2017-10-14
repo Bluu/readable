@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import {  
+    Grid, 
+    Cell,
+    Card,
+} from 'react-md';
 
 import { 
     startVoteComment, 
@@ -53,12 +58,24 @@ class Comment extends Component {
         } = this.props;
 
         return (
-            <div>
-                <CommentData 
-                    comment={comment}
-                />
-                <Vote voteScore={comment.voteScore} onVote={this.handleOnCommentVote}/>
-                <Actions onDelete={this.handleOnCommentDelete} onEdit={this.handleOnCommentEdit}/>
+            <div style={{ marginBottom: 20}}>
+                <Grid noSpacing >
+                    <Cell size={10}>
+                        <Card className="md-block-centered">
+                            <CommentData 
+                                comment={comment}
+                            />
+                            
+                            <Actions 
+                                onDelete={this.handleOnCommentDelete} 
+                                onEdit={this.handleOnCommentEdit}
+                            />
+                        </Card>
+                    </Cell>
+                    <Cell size={2}>
+                        <Vote voteScore={comment.voteScore} onVote={this.handleOnCommentVote}/>
+                    </Cell>
+                </Grid>
             </div>
         )
     }

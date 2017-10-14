@@ -8,7 +8,7 @@ const Actions = ({
     onEdit,
 }) => (
     <CardActions>
-        { !onDisplayDetails ? null : <Button raised primary onClick={onDisplayDetails}>Display more information</Button> }
+        { !onDisplayDetails ? null : <Button raised primary onClick={onDisplayDetails}>View Details</Button> }
         { !onDelete ? null : <Button flat secondary onClick={onDelete}>DELETE</Button> }
         { !onEdit ? null : <Button flat primary onClick={onEdit}>EDIT</Button> }
     </CardActions>

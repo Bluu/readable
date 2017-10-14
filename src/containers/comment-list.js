@@ -1,6 +1,7 @@
 import React, { Component, } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { Button, Grid, } from 'react-md';
 
 import { 
     commentsSort,
@@ -93,10 +94,14 @@ class CommentList extends Component {
 
         return (
             <div>
-                <button onClick={this.handleNewComment}>Add new comment</button>
-                <div>
+                <Grid>
+                    <span className="md-display-1">Comments&nbsp;</span>
+                    <Button floating primary onClick={this.handleNewComment}>add</Button>
+                </Grid>
+                <Grid>
+                    <span className="md-subheading-2">Sort Comments&nbsp;</span>
                     <Sort onSort={this.handleOnCommentSort}/>
-                </div>
+                </Grid>
                 <div>
                     {
                         comments.map((comment, index) => <Comment key={index} comment={comment}/>)

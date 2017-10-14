@@ -1,10 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { 
-    Card, 
     CardTitle, 
     CardText, 
-    Slider 
 } from 'react-md';
 
 const PostData = (
@@ -29,7 +27,7 @@ const PostData = (
     
     return (
         <div>
-            <CardTitle title={title} subtitle={`by ${author} | ${postDate} ${!commentsCount ? '' : '| ' + commentsCount}`}/>
+            <CardTitle title={title} subtitle={`by ${author} | ${postDate} ${!commentsCount ? '' : '| ' + commentsCount + ' Comment(s)'}`}/>
             <CardText>
                 <p>{body}</p>
             </CardText>
