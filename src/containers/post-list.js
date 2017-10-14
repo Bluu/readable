@@ -1,6 +1,7 @@
 import React, { Component, } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { Button, Grid, Cell } from 'react-md';
 
 import { 
     postsSort,
@@ -86,7 +87,18 @@ class PostList extends Component {
 
         return (
             <div>
-                <button onClick={this.handleNewPost}>Add new post</button>
+                <Grid>
+                    <span className="md-display-2">{`${!category ? 'All' : category} Posts`}&nbsp;</span>
+                    <Button floating primary onClick={this.handleNewPost}>add</Button>
+                </Grid>
+                <Grid>
+                    <Cell size={4} className="md-text-center">
+                        <Categories categories={categories} currentCategory={category}/>
+                    </Cell>
+                    <Cell size={8}>
+                    
+                    </Cell>
+                </Grid>
                 <div>
                     <Categories categories={categories} currentCategory={category}/>
                 </div>

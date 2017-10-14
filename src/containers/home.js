@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import { Route, Switch, withRouter } from 'react-router-dom';
+import { Toolbar } from 'react-md';
 
 import {
     startFetchCategories,
@@ -26,6 +27,10 @@ class Home extends Component {
     render() {
         return (
             <div>
+                <Toolbar
+                    colored
+                    title="READABLE by German Cuamea"
+                />
                 <div>
                     <Switch>
                         <Route exact path="/" component={PostList}/>
