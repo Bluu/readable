@@ -44,6 +44,7 @@ npm start
 * [React](https://facebook.github.io/react/)
 * [Create React App](https://github.com/facebookincubator/create-react-app)
 * [React Router](https://github.com/ReactTraining/react-router)
+* [Redux](http://redux.js.org/)
 
 ## Authors
 
