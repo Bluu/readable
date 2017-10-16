@@ -109,7 +109,7 @@ class PostList extends Component {
                         <Categories categories={categories} currentCategory={category} onCategorySelect={this.handleCategorySelect}/>
                     </Cell>
                     <Cell size={8}>
-                        { filteredPosts.map(post => <Post key={post.id} post={post} showDetailsOpt={true} />) } 
+                        { filteredPosts.map(post => <Post key={post.id} post={post} showDetailsOpt={true} showDeleteOpt={true} showEditOpt={true} />) } 
                     </Cell>
                 </Grid>
             </div>

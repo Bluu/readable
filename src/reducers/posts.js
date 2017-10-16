@@ -2,6 +2,9 @@ import {
     POSTS_SORT,
     FETCH_POSTS,
     TOGGLE_POST_DIALOG,
+    ADD_POST,
+    EDIT_POST,
+    DELETE_POST,
 } from '../actions/posts';
 
 const initialState = {
@@ -35,6 +38,21 @@ export default (state = initialState, action) => {
                     visible: !state.dialog.visible,
                     selectedPost: action.selectedPost,
                 },
+            }
+        case ADD_POST:
+            return {
+                ...state,
+                posts: state.posts.concat([action.post]),
+            }
+        case EDIT_POST:
+            return {
+                ...state,
+                posts: state.posts.map(statePost => statePost.id === action.post.id ? action.post : statePost),
+            }
+        case DELETE_POST:
+            return {
+                ...state,
+                posts: state.posts.filter(({id}) => id !== action.post.id),
             }
         default:
             return state;

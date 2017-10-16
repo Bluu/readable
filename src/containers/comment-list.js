@@ -6,7 +6,6 @@ import { Button, Grid, } from 'react-md';
 import { 
     commentsSort,
     toggleCommentDialog,
-    startFetchComments,
 } from '../actions/comments';
 import Comment from './comment';
 import Sort from '../components/sort';
@@ -57,22 +56,15 @@ class CommentList extends Component {
         this.props.toggleCommentDialog();
     }
 
-    componentDidMount() {
-        const {
-            postID,
-            startFetchComments,
-        } = this.props;
-
-        startFetchComments(postID);
-    }
-
     render() {
         const {
             postID,
             comments: { comments, sort },
-        } = this.props
+        } = this.props;
 
-        comments.sort((a, b) => {
+        const postComments = comments.filter(comment => comment.parentId === postID);
+
+        postComments.sort((a, b) => {
             if (sort.order) {
                 if (a[sort.by] > b[sort.by]) {
                     return -1;
@@ -103,7 +95,7 @@ class CommentList extends Component {
                 </Grid>
                 <div>
                     {
-                        comments.map((comment, index) => <Comment key={index} comment={comment}/>)
+                        postComments.map((comment, index) => <Comment key={index} comment={comment}/>)
                     }
                 </div>
                 <CommentAlter postID={postID}/>
@@ -123,6 +115,5 @@ export default connect(
     (dispatch) => bindActionCreators({
         commentsSort,
         toggleCommentDialog,
-        startFetchComments,
     }, dispatch)
 )(CommentList)

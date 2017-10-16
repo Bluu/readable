@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, DialogContainer, TextField, SelectField } from 'react-md';
+import uuid from 'uuid/v1';
 
 const PostForm = ({
     visible,
@@ -43,7 +44,7 @@ const PostForm = ({
         }
 
         const post = {
-            id: id || Math.random().toString(),
+            id: id || uuid(),
             title,
             body,
             author,

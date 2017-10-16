@@ -47,7 +47,7 @@ class Home extends Component {
             <div>
                 <Toolbar
                     colored
-                    title="READABLE by German Cuamea"
+                    title={<span className="clickable" onClick={this.handleNavHome}>READABLE by German Cuamea</span>}
                     nav={pathname === '/' ? null : 
                         <Button
                             key="action"

@@ -24,19 +24,13 @@ npm install
 
 ## Running
 
-You need to run a local server and the react application.
-
-To run the server execute the command:
-
-```
-npm run server
-```
-
-To run the application execute the command:
+To run the application you only need to execute one command:
 
 ```
 npm start
 ```
+
+This will start the server and the react app.
 
 ## Built With
 

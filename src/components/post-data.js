@@ -27,7 +27,7 @@ const PostData = (
     
     return (
         <div>
-            <CardTitle title={title} subtitle={`by ${author} | ${postDate} ${!commentsCount ? '' : '| ' + commentsCount + ' Comment(s)'}`}/>
+            <CardTitle title={title} subtitle={`by ${author} | ${postDate} | ${commentsCount} Comment(s)`}/>
             <CardText>
                 <p>{body}</p>
             </CardText>

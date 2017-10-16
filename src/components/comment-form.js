@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, DialogContainer, TextField } from 'react-md';
+import uuid from 'uuid/v1';
 
 const CommentForm = ({
     visible,
@@ -28,7 +29,7 @@ const CommentForm = ({
         }
 
         const comment = {
-            id: id || Math.random().toString(),
+            id: id || uuid(),
             author,
             body,
             timestamp: Date.now(),

@@ -8,7 +8,14 @@ import {
     Card,
 } from 'react-md';
 
-import { startVotePost, startDeletePost, togglePostDialog } from '../actions/posts';
+import { 
+    startVotePost, 
+    startDeletePost, 
+    togglePostDialog 
+} from '../actions/posts';
+import { 
+    startFetchComments,
+} from '../actions/comments';
 import Actions from '../components/actions';
 import Vote from '../components/vote';
 import PostData from '../components/post-data';
@@ -61,6 +68,15 @@ class Post extends Component {
         startVotePost(id, voteType);
     }
 
+    componentDidMount() {
+        const {
+            post: { id} ,
+            startFetchComments,
+        } = this.props;
+
+        startFetchComments(id);
+    }
+
     render() {
         const { 
             post,
@@ -69,6 +85,8 @@ class Post extends Component {
             showEditOpt,
             comments,
         } = this.props;
+
+        const postComments = comments.filter(comment => comment.parentId === post.id);
         
         return (
             <div style={{ marginBottom: 20}}>
@@ -81,7 +99,7 @@ class Post extends Component {
                                 onPostDetail={this.handleOnPostDetail} 
                                 onPostEdit={this.handleOnPostEdit}
                                 onPostDelete={this.handleOnPostDelete}
-                                commentsCount={comments.length}
+                                commentsCount={postComments.length}
                             />
                             
                             <Actions 
@@ -110,5 +128,6 @@ export default withRouter(connect(
         startVotePost,
         startDeletePost,
         togglePostDialog,
+        startFetchComments,
     }, dispatch)
 )(Post))
